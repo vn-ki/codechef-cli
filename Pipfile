@@ -5,8 +5,10 @@ name = "pypi"
 
 [packages]
 codechef-cli = {editable = true, path = "."}
+flask = "*"
 
 [dev-packages]
+pytest = "*"
 
 [requires]
 python_version = "3.7"
