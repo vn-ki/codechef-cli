@@ -1,16 +1,10 @@
 ﻿import click
-import sys
-import os
-
-import logging
 
 from codechef_cli.config import Config
 from codechef_cli.__version__ import __version__
 
-echo = click.echo
-
-
 plugin_folder = os.path.join(os.path.dirname(__file__), 'commands')
+
 
 class CLIClass(click.MultiCommand):
 
