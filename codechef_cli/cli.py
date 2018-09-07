@@ -1,4 +1,5 @@
 ﻿import click
+import os
 
 from codechef_cli.config import Config
 from codechef_cli.__version__ import __version__
