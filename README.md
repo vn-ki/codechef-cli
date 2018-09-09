@@ -14,13 +14,13 @@ Project: CLI app for code chef.
 ### Client
 - Click based CLI
 - commands
-  - login
+  - [x] login
     - start OAUTH flow
     - save received tokens
-  - submissions
+  - [ ] submissions
     - add INPUTFILE --problem-code[-pc] --contest-code[-cc]
     - showall
     - status [uid]
-  - compete
+  - [ ] compete
     - show --contest-code[-ci] --filter=[ongoing,past,upcoming]
     - problems --problem-code[-pc] --problem-no[-pn]

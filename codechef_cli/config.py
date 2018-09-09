@@ -6,28 +6,14 @@ import json
 APP_NAME = 'codechef'
 APP_DIR = click.get_app_dir(APP_NAME)
 DEFAULT_CONFIG = {
-    'dl': {
-        'url': False,
-        'player': None,
-        'skip_download': False,
-        'download_dir': '.',
-        'quality': '720p',
-        'fallback_qualities': ['720p', '480p', '360p'],
-        'force_download': False,
-        'log_level': 'INFO',
-        'file_format': '{anime_title}/{anime_title}_{ep_no}',
-        'provider': '9anime',
-        'external_downloader': '',
+    'global': {
+        'client_id':"a5a5697c8f2bfcbc816635b0e6c05b83",
+        'client_secret':"1247a2aa0a2f37f00003a3fe9d15a2d3"
     },
-    'watch': {
-        'quality': '720p',
-        'log_level': 'INFO',
-        'provider': '9anime',
-    }
 }
 
 
-class _Config:
+class _Config():
     CONFIG_FILE = os.path.join(APP_DIR, 'config.json')
 
     def __init__(self):
@@ -43,14 +29,15 @@ class _Config:
         else:
             self._CONFIG = self._read_config()
 
-            def update(gkey):
-                for key, val in DEFAULT_CONFIG[gkey].items():
-                    if key not in self._CONFIG[gkey].keys():
-                        self._CONFIG[gkey][key] = val
+            #TODO:@vn-ki: we don't need this, right?
+            # def update(gkey):
+                # for key, val in DEFAULT_CONFIG[gkey].items():
+                    # if key not in self._CONFIG[gkey].keys():
+                        # self._CONFIG[gkey][key] = val
 
-            for key in ['dl', 'watch']:
-                update(key)
-            self.write()
+            # for key in ['dl', 'watch']:
+                # update(key)
+            # self.write()
 
     @property
     def CONTEXT_SETTINGS(self):
@@ -60,6 +47,12 @@ class _Config:
 
     def __getitem__(self, attr):
         return self._CONFIG[attr]
+
+    def __setitem__(self, attr, value):
+        self._CONFIG[attr] = value
+
+    def keys(self):
+        return self._CONFIG.keys()
 
     def write(self):
         self._write_config(self._CONFIG)
