@@ -1,10 +1,12 @@
 import click
 import logging
+from tabulate import tabulate
 
 <<<<<<< HEAD
 logger = logging.getLogger(__name__)
 =======
 from codechef_cli import api
+from codechef_cli import util
 
 logger = logging.Logger(__name__)
 >>>>>>> b76f1c9... work on compete
@@ -24,6 +26,7 @@ def cli():
 @click.option(
     '--filter',
     type=click.Choice(['past', 'present', 'future']),
+    default='present',
     help="The contest code of the problem you are submitting."
 )
 def show(contest_code, filter):
@@ -34,6 +37,12 @@ def show(contest_code, filter):
             'limit': 50,
             'status': filter,
         })['contestList']
+        # contests = util.format_search_results(contests, keys=['code', 'name', 'startDate', 'endDate'])
+        contests = util.select_one(contests,
+                                   keys_colors=[['code', {'fg': 'yellow', 'bold': True}],
+                                                ['name', {'fg': 'blue', 'bold': True}],
+                                                'startDate', 'endDate'])
+        print(contests)
 
     else:
         contest = api.get_data('contests', contest_code)

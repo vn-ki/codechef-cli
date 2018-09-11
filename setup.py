@@ -24,6 +24,7 @@ setup(
         'requests>=2.18.4',
         'Click>=6.7',
         'flask>=1.0.2',
+        'tabulate>=0.8.2',
     ],
     tests_require=[
         'pytest',
