@@ -1,6 +1,6 @@
 import os
 
-from codechef.config import _Config, APP_DIR
+from codechef_cli.config import _Config, APP_DIR
 
 
 class _Data(_Config):
@@ -10,3 +10,5 @@ class _Data(_Config):
     def __setitem__(self, attr, value):
         self._CONFIG[attr] = value
         self.write()
+
+Data = _Data()
