@@ -1,14 +1,16 @@
 import requests
 import logging
 from codechef_cli.data import Data
-import codechef_cli.exceptions
+import codechef_cli.exceptions as exceptions
 
 logger = logging.getLogger(__name__)
 API_URL = 'https://api.codechef.com'
 
 
 def call_api(*path, params=None, method=None):
-    #TODO:adapt this for method=POST
+    # TODO:adapt this for method=POST
+    if "tokens" not in Data.keys():
+        raise exceptions.TokensNotFound
     tokens = Data["tokens"]
     # set apporipriate headers
     headers = {
@@ -17,24 +19,39 @@ def call_api(*path, params=None, method=None):
     }
     # buid complete path from pieces `path`
     path = "/".join([str(part) for part in path])
-    if isinstance(params, dict):
-        query = "&".join(["{}={}".format(key, params[key])
-                          for key in params.keys()])
-    else:
-        query = ""
 
-    url = "{}/{}?{}".format(API_URL, path, query)
+    url = "{}/{}".format(API_URL, path)
 
-    logger.debug("calling {}".format(url))
-    response = requests.get(url, headers=headers)
+    logger.debug("calling {}, params: {}".format(url, params))
+    response = requests.get(url, headers=headers, params=params)
     response_map = response.json()
     logger.debug("response from CC:status: {}".format(response_map['status']))
 
     if response_map['status'] == "OK":
         return response_map["result"]["data"]["content"]
     else:
-        #TODO:check response_map["result"] for error and refresh tokens accordingly
-        raise exceptions.APIInputError
+        logger.debug("status not OK, result: {}".format(
+            response_map["result"]))
+        try:
+            # check if error is unauthorized
+            # TODO:test refresh token functionality
+            if response_map["result"]["errors"][0]["code"] == "unauthorized":
+                from codechef_cli.config import Config
+                global_config = Config["global"]
+                resp = requests.post("{}/oauth/token".format(API_URL),
+                                     json={"grant_type": "refresh_token",
+                                           "refresh_token": tokens["refresh_token"],
+                                           "client_id": global_config["client_id"],
+                                           "client_secret": global_config["client_secret"]
+                                           },
+                                     headers={'content-Type': 'application/json'})
+                resp_map = resp.json()
+                logger.debug(resp_map)
+        # TODO: handle exceptions carefully
+        except Exception as e:
+            logger.error(e)
+            raise exceptions.APIInputError
+
 
 def get_data(*path, params=None):
-    call_api(*path, params=params, method="GET")
+    return call_api(*path, params=params, method="GET")
