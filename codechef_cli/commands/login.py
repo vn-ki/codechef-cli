@@ -16,9 +16,10 @@ def cli(force):
     """Start the login process, receive tokens and store them"""
     if 'tokens' not in Config.keys() or force:
         global_config = Config['global']
-        ccoauth = CodechefOauth(global_config['client_id'], global_config['client_secret'])
+        ccoauth = CodechefOauth(
+            global_config['client_id'], global_config['client_secret'])
         ccoauth.start_oauth_flow()
-        #if everything went well, our tokens should be in ccoauth.tokens
+        # if everything went well, our tokens should be in ccoauth.tokens
         Config['tokens'] = ccoauth.tokens
         Config.write()
         print("You're successfully logged in.")
