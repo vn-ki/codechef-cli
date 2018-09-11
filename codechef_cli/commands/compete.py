@@ -1,7 +1,13 @@
 import click
 import logging
 
+<<<<<<< HEAD
 logger = logging.getLogger(__name__)
+=======
+from codechef_cli import api
+
+logger = logging.Logger(__name__)
+>>>>>>> b76f1c9... work on compete
 
 
 @click.group()
@@ -17,11 +23,20 @@ def cli():
 )
 @click.option(
     '--filter',
-    type=click.Choice(['ongoing', 'past', 'upcoming']),
+    type=click.Choice(['past', 'present', 'future']),
     help="The contest code of the problem you are submitting."
 )
-def show(problem_code, contest_code):
+def show(contest_code, filter):
     """Show all contests or a specific contest."""
+    if contest_code == None:
+        contests = api.get_data('contests', params={
+            'fields': 'code, name, startDate, endDate',
+            'limit': 50,
+            'status': filter,
+        })['contestList']
+
+    else:
+        contest = api.get_data('contests', contest_code)
 
 
 @cli.command()
