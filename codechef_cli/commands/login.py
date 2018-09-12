@@ -5,7 +5,7 @@ from codechef_cli.api.oauth import CodechefOauth
 from codechef_cli.data import Data
 from codechef_cli.config import Config
 
-logger = logging.Logger(__name__)
+logger = logging.getLogger(__name__)
 
 
 @click.command()

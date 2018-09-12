@@ -5,7 +5,7 @@ import webbrowser
 import logging
 from flask import Flask, request
 
-logger = logging.Logger(__name__)
+logger = logging.getLogger(__name__)
 # set werkzeug's logging to ERROR only
 werkzeug_logger = logging.getLogger('werkzeug')
 werkzeug_logger.setLevel(logging.ERROR)
