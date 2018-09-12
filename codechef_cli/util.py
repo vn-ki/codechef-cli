@@ -48,3 +48,8 @@ def select_one(ret_dict, keys_colors=None, msg='Select one'):
     print(table)
     value = click.prompt(msg, type=int)
     return ret_dict[value-1]
+
+
+def html_to_terminal(text):
+    from inscriptis import get_text
+    return get_text(text)

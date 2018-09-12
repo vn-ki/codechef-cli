@@ -3,9 +3,13 @@ import logging
 from tabulate import tabulate
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 logger = logging.getLogger(__name__)
 =======
 from codechef_cli import api
+=======
+from codechef_cli import api, tui
+>>>>>>> 1e0c74d... tui
 from codechef_cli import util
 
 logger = logging.Logger(__name__)
@@ -42,7 +46,8 @@ def show(contest_code, filter):
                                    keys_colors=[['code', {'fg': 'yellow', 'bold': True}],
                                                 ['name', {'fg': 'blue', 'bold': True}],
                                                 'startDate', 'endDate'])
-        print(contests)
+
+        tui.draw_contest_page(api.get_contest(contests['code']))
 
     else:
         contest = api.get_data('contests', contest_code)

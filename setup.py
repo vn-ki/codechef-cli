@@ -25,6 +25,7 @@ setup(
         'Click>=6.7',
         'flask>=1.0.2',
         'tabulate>=0.8.2',
+        'inscriptis>=0.0.3.2',
     ],
     tests_require=[
         'pytest',
