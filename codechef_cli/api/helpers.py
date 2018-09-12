@@ -18,9 +18,9 @@ def call_api(*path, params=None, method=None):
         "Authorization": "Bearer {}".format(tokens['access_token'])
     }
     # buid complete path from pieces `path`
-    path = "/".join([str(part) for part in path])
+    compiled_path = "/".join([str(part) for part in path])
 
-    url = "{}/{}".format(API_URL, path)
+    url = "{}/{}".format(API_URL, compiled_path)
 
     logger.debug("calling {}, params: {}".format(url, params))
     response = requests.get(url, headers=headers, params=params)
@@ -34,8 +34,8 @@ def call_api(*path, params=None, method=None):
             response_map["result"]))
         try:
             # check if error is unauthorized
-            # TODO:test refresh token functionality
             if response_map["result"]["errors"][0]["code"] == "unauthorized":
+                logger.debug("tokens expired, trying to refresh tokens")
                 from codechef_cli.config import Config
                 global_config = Config["global"]
                 resp = requests.post("{}/oauth/token".format(API_URL),
@@ -46,7 +46,16 @@ def call_api(*path, params=None, method=None):
                                            },
                                      headers={'content-Type': 'application/json'})
                 resp_map = resp.json()
-                logger.debug(resp_map)
+                logger.debug("response from CC: ", resp_map)
+                # store tokens
+                if resp_map["status"] == "OK":
+                    Data["tokens"] = resp_map["result"]["data"]
+                    # re-run the query
+                    logger.debug("retrying query with new tokens")
+                    call_api(*path, params=params, method=method)
+                else:
+                    # TODO:seperate exception?
+                    raise exceptions.CodechefException
         # TODO: handle exceptions carefully
         except Exception as e:
             logger.error(e)
