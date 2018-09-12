@@ -10,6 +10,15 @@ from codechef_cli.api.helpers import get_data
 logger = logging.getLogger(__name__)
 
 
+def _update_submit_userdata():
+    cookies = click.prompt("enter cookies(single line)")
+    user_agent = click.prompt("enter user-agent(single line)")
+    Data["submit_userdata"] = {
+        "cookies": cookies,
+        "user_agent": user_agent
+    }
+
+
 @click.group()
 def cli():
     """Submit your solution to a problem and view it's status."""
@@ -54,14 +63,7 @@ def add(problem_code, input_file, language):
     logger.setLevel(logging.DEBUG)
     # read userdata
     if "submit_userdata" not in Data.keys():
-        click.echo("enter cookies(single line): ")
-        cookies = input()
-        click.echo("enter user-agent(single line): ")
-        user_agent = input()
-        Data["submit_userdata"] = {
-            "cookies": cookies,
-            "user_agent": user_agent
-        }
+        _update_submit_userdata()
     userdata = Data["submit_userdata"]
     cookies = userdata["cookies"]
     user_agent = userdata["user_agent"]
@@ -74,12 +76,19 @@ def add(problem_code, input_file, language):
         "User-Agent": user_agent
     }
     r = session.get(problem_url)
-    form_token = re.search(
-        r"name=\"form_token\".*?value=\"(.*?)\"", r.text).group(1)
-    form_build_id = re.search(
-        r"name=\"form_build_id\".*?value=\"(.*?)\"", r.text).group(1)
-    logger.debug("form_token: {}, form_build_id:{}".format(
-        form_token, form_build_id))
+    try:
+        form_token = re.search(
+            r"name=\"form_token\".*?value=\"(.*?)\"", r.text).group(1)
+        form_build_id = re.search(
+            r"name=\"form_build_id\".*?value=\"(.*?)\"", r.text).group(1)
+        logger.debug("form_token: {}, form_build_id:{}".format(
+            form_token, form_build_id))
+    # TODO: more robust way to conclude that tokens are expired?
+    except AttributeError:
+        click.echo("Your tokens are no longer valid. Please enter the new ones.")
+        _update_submit_userdata()
+        # TODO: run command again
+        return
 
     # send the code
     r = session.post(problem_url, data={
