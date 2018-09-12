@@ -2,6 +2,7 @@ import click
 import logging
 from tabulate import tabulate
 
+<<<<<<< HEAD:codechef_cli/commands/compete.py
 <<<<<<< HEAD
 <<<<<<< HEAD
 logger = logging.getLogger(__name__)
@@ -11,6 +12,10 @@ from codechef_cli import api
 from codechef_cli import api, tui
 >>>>>>> 1e0c74d... tui
 from codechef_cli import util
+=======
+from codechef_cli import api, tui, util
+from codechef_cli.data import Data
+>>>>>>> d4b3bee... rename compete to contest:codechef_cli/commands/contest.py
 
 logger = logging.Logger(__name__)
 >>>>>>> b76f1c9... work on compete
@@ -46,7 +51,7 @@ def show(contest_code, filter):
                                    keys_colors=[['code', {'fg': 'yellow', 'bold': True}],
                                                 ['name', {'fg': 'blue', 'bold': True}],
                                                 'startDate', 'endDate'])
-
+        Data['_last_accesed_contest'] = contests
         tui.draw_contest_page(api.get_contest(contests['code']))
 
     else:
@@ -64,3 +69,6 @@ def show(contest_code, filter):
 )
 def problems(problem_code, contest_code):
     """See problems in a contest."""
+    if not contest_code:
+        contest = Data['_last_accesed_contest']
+        tui.draw_contest_page(api.get_contest(contest['code']))

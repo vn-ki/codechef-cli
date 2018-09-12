@@ -40,7 +40,8 @@ def draw_contest_page(contest):
             # for line in wrapped:
                 # lines += line.split('<br />')
             lines = util.html_to_terminal(prob.body).split('\n')
-            lines = [click.style(prob.problem_name, bg='black', fg='blue', bold=True), ''] + lines
+            lines = [click.style(prob.problem_name, bg='black',
+                                 fg='blue', bold=True), ''] + lines
             text.set(lines)
 
         def listbox_changed(w_a):
@@ -62,7 +63,8 @@ def draw_contest_page(contest):
         d.add(3, 2, w)
 
         text_x, text_y = 30, 2
-        text = TextArea(wid-text_x-5, hei-text_y-2, ['CONTEST_CODE: ' + contest.contest_code, 'NAME: '+contest.name])
+        text = TextArea(wid-text_x-5, hei-text_y-2,
+                        ['CONTEST_CODE: ' + contest.contest_code, 'NAME: '+contest.name])
         set_text_body(contest[0])
         d.add(text_x, text_y, text)
         w.on("changed", listbox_changed)
