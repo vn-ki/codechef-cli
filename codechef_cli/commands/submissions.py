@@ -1,4 +1,3 @@
-import sys
 import click
 import logging
 import re
@@ -23,15 +22,20 @@ def cli():
     help="The problem code of the problem you are submitting."
 )
 @click.option(
+    '--language', '-l', metavar='ID',
+    help="The language **id** in which your code is written",
+    required=True
+)
+@click.option(
     '--input-file', '-if', metavar='ID',
-    help="The file containing code, leave empty to read from stdin",
-    required=False
+    help="The file containing code",
+    required=True
 )
 # @click.option(
 # '--contest-code', '-cc', metavar='ID',
 # help="The contest code of the problem you are submitting."
 # )
-def add(problem_code, input_file):
+def add(problem_code, input_file, language):
     """Add a submission."""
     # TODO:
     """
@@ -83,10 +87,11 @@ def add(problem_code, input_file):
         "form_build_id": form_build_id,
         "form_id": "problem_submission",
         "program": "",
-        "language": 116,
+        # TODO:create a map of languages and ids
+        "language": language,
         "problem_code": problem_code
     }, files={
-        "files[sourcecode]": open(input_file, 'r') if input_file else sys.stdin
+        "files[sourcefile]": open(input_file, 'r')
     })
 
     # done
