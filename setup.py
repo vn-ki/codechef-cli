@@ -26,6 +26,7 @@ setup(
         'flask>=1.0.2',
         'tabulate>=0.8.2',
         'inscriptis>=0.0.3.2',
+        'picotui>=1.0'
     ],
     tests_require=[
         'pytest',
