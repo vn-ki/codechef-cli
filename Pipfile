@@ -5,7 +5,6 @@ name = "pypi"
 
 [packages]
 codechef-cli = {editable = true, path = "."}
-flask = "*"
 
 [dev-packages]
 pytest = "*"

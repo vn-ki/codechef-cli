@@ -28,6 +28,7 @@ setup(
         'inscriptis>=0.0.3.2',
         'picotui>=1.0',
         'lxml',
+        'coloredlogs==10.0'
     ],
     tests_require=[
         'pytest',

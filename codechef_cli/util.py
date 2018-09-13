@@ -1,5 +1,6 @@
 import shutil
 import click
+import coloredlogs
 import logging
 import platform
 from tabulate import tabulate as _tabulate
@@ -9,13 +10,12 @@ logger = logging.getLogger(__name__)
 
 def setup_logger(log_level):
     if log_level == 'DEBUG':
-        format = click.style('%(levelname)s', fg='green') + \
-            ' %(name)s: %(message)s'
+        format = '%(asctime)s %(hostname)s %(name)s[%(process)d] %(levelname)s %(message)s'
     else:
         format = click.style('codechef', fg='green') + ': %(message)s'
 
-    logging.basicConfig(format=format)
-    logging.getLogger("codechef_cli").setLevel(log_level)
+    logger = logging.getLogger("codechef_cli")
+    coloredlogs.install(level=log_level, fmt=format, logger=logger)
 
 
 def print_info(version):
