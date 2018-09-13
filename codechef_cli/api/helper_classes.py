@@ -23,6 +23,9 @@ class Contest:
                                                  self.contest_code)
         return self._problems_list[index]
 
+    def is_problem_fetched(self, index):
+        return not isinstance(self._problems_list[index], dict)
+
 
 class Problem:
     def __init__(self, problem_code, contest_code):

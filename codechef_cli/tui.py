@@ -10,6 +10,7 @@ from picotui.widgets import (
 import click
 
 import shutil
+import threading
 
 from codechef_cli import util
 
@@ -45,10 +46,26 @@ def draw_contest_page(contest):
             text.set(lines)
 
         def listbox_changed(w_a):
-            prob = contest[w_a.choice]
-            set_text_body(prob)
-            text.goto_line(0)
-            text.redraw()
+            # TODO(vn-ki): refractor this
+            def write_prob_to_screen():
+                prob = contest[w_a.choice]
+                if len(text.content) > 1:
+                    return
+                set_text_body(prob)
+                text.goto_line(0)
+                text.redraw()
+            if not contest.is_problem_fetched(w_a.choice):
+                t = threading.Thread(target=write_prob_to_screen)
+                t.start()
+                text.set(['Loading...'])
+                text.goto_line(0)
+                text.redraw()
+            else:
+                write_prob_to_screen()
+                prob = contest[w_a.choice]
+                set_text_body(prob)
+                text.goto_line(0)
+                text.redraw()
 
         Screen.attr_color(C_WHITE, C_BLACK)
         Screen.cls()
