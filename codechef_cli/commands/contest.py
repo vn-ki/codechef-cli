@@ -1,24 +1,10 @@
 import click
 import logging
-from tabulate import tabulate
 
-<<<<<<< HEAD:codechef_cli/commands/compete.py
-<<<<<<< HEAD
-<<<<<<< HEAD
-logger = logging.getLogger(__name__)
-=======
-from codechef_cli import api
-=======
-from codechef_cli import api, tui
->>>>>>> 1e0c74d... tui
-from codechef_cli import util
-=======
 from codechef_cli import api, tui, util
 from codechef_cli.data import Data
->>>>>>> d4b3bee... rename compete to contest:codechef_cli/commands/contest.py
 
 logger = logging.Logger(__name__)
->>>>>>> b76f1c9... work on compete
 
 
 @click.group()
