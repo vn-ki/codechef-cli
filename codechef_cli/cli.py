@@ -27,13 +27,11 @@ class CLIClass(click.MultiCommand):
         return ns['cli']
 
 
-
 @click.group(cls=CLIClass, context_settings=Config.CONTEXT_SETTINGS)
 @click.version_option(version=__version__)
 @click.option(
     '--log-level', '-ll',
     type=click.Choice(['ERROR', 'WARNING', 'INFO', 'DEBUG']),
-    default='INFO',
     help="Log Level"
 )
 def cli(log_level):

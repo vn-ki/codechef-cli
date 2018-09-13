@@ -26,22 +26,24 @@ def cli():
 )
 def show(contest_code, filter):
     """Show all contests or a specific contest."""
-    if contest_code == None:
+    if contest_code is None:
         contests = api.get_data('contests', params={
             'fields': 'code, name, startDate, endDate',
             'limit': 50,
             'status': filter,
         })['contestList']
-        # contests = util.format_search_results(contests, keys=['code', 'name', 'startDate', 'endDate'])
-        contests = util.select_one(contests,
-                                   keys_colors=[['code', {'fg': 'yellow', 'bold': True}],
-                                                ['name', {'fg': 'blue', 'bold': True}],
-                                                'startDate', 'endDate'])
+        contests = util.select_one(
+            contests,
+            keys_colors=[['code', {'fg': 'yellow', 'bold': True}],
+                         ['name', {'fg': 'blue', 'bold': True}],
+                         'startDate', 'endDate']
+        )
         Data['_last_accesed_contest'] = contests
         tui.draw_contest_page(api.get_contest(contests['code']))
 
     else:
         contest = api.get_data('contests', contest_code)
+        tui.draw_contest_page(api.get_contest(contest['code']))
 
 
 @cli.command()

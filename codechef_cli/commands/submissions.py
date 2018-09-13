@@ -6,17 +6,7 @@ import requests
 from codechef_cli.data import Data
 from codechef_cli.api.helpers import get_data
 
-
 logger = logging.getLogger(__name__)
-
-
-def _update_submit_userdata():
-    cookies = click.prompt("enter cookies(single line)")
-    user_agent = click.prompt("enter user-agent(single line)")
-    Data["submit_userdata"] = {
-        "cookies": cookies,
-        "user_agent": user_agent
-    }
 
 
 @click.group()
@@ -40,10 +30,6 @@ def cli():
     help="The file containing code",
     required=True
 )
-# @click.option(
-# '--contest-code', '-cc', metavar='ID',
-# help="The contest code of the problem you are submitting."
-# )
 def add(problem_code, input_file, language):
     """Add a submission."""
     # TODO:
@@ -118,3 +104,12 @@ def status(uid):
     resp = get_data("submissions", uid)
     # TODO:print response in a useful manner
     print(resp)
+
+
+def _update_submit_userdata():
+    cookies = click.prompt("enter cookies(single line)")
+    user_agent = click.prompt("enter user-agent(single line)")
+    Data["submit_userdata"] = {
+        "cookies": cookies,
+        "user_agent": user_agent
+    }
