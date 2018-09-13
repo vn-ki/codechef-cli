@@ -1,6 +1,25 @@
 import shutil
 import click
+import logging
+import platform
 from tabulate import tabulate as _tabulate
+
+logger = logging.getLogger(__name__)
+
+
+def setup_logger(log_level):
+    if log_level == 'DEBUG':
+        format = '%(levelname)s %(name)s: %(message)s'
+    else:
+        format = click.style('codechef', fg='green') + ': %(message)s'
+
+    logging.basicConfig(level=log_level, format=format)
+
+
+def print_info(version):
+    logger.info('codechef-cli {}'.format(version))
+    logger.debug('Platform: {}'.format(platform.platform()))
+    logger.debug('Python {}'.format(platform.python_version()))
 
 
 def format_search_results(search_results, keys=None):

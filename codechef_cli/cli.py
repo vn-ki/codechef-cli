@@ -1,6 +1,7 @@
 ﻿import click
 import os
 
+from codechef_cli import util
 from codechef_cli.config import Config
 from codechef_cli.__version__ import __version__
 
@@ -26,4 +27,16 @@ class CLIClass(click.MultiCommand):
         return ns['cli']
 
 
-cli = CLIClass(context_settings=Config.CONTEXT_SETTINGS, help="Codechef cli")
+
+@click.group(cls=CLIClass, context_settings=Config.CONTEXT_SETTINGS)
+@click.version_option(version=__version__)
+@click.option(
+    '--log-level', '-ll',
+    type=click.Choice(['ERROR', 'WARNING', 'INFO', 'DEBUG']),
+    default='INFO',
+    help="Log Level"
+)
+def cli(log_level):
+    """Codechef CLI"""
+    util.setup_logger(log_level)
+    util.print_info(__version__)

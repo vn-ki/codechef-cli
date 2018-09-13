@@ -59,8 +59,6 @@ def add(problem_code, input_file, language):
      - find submission_id from req.url
      - print and store it
     """
-    logging.basicConfig()
-    logger.setLevel(logging.DEBUG)
     # read userdata
     if "submit_userdata" not in Data.keys():
         _update_submit_userdata()

@@ -6,6 +6,7 @@ import json
 APP_NAME = 'codechef'
 APP_DIR = click.get_app_dir(APP_NAME)
 DEFAULT_CONFIG = {
+    'log_level': 'INFO',
     'global': {
         'client_id': "a5a5697c8f2bfcbc816635b0e6c05b83",
         'client_secret': "1247a2aa0a2f37f00003a3fe9d15a2d3"
@@ -30,15 +31,17 @@ class _Config():
         else:
             self._CONFIG = self._read_config()
 
-            # TODO:@vn-ki: we don't need this, right?
-            # def update(gkey):
-            # for key, val in self.DEFAULT_VALUES[gkey].items():
-            # if key not in self._CONFIG[gkey].keys():
-            # self._CONFIG[gkey][key] = val
+            def update(gkey):
+                for key, val in self.DEFAULT_VALUES[gkey].items():
+                    if key not in self._CONFIG[gkey].keys():
+                        self._CONFIG[gkey][key] = val
 
-            # for key in ['dl', 'watch']:
-            # update(key)
-            # self.write()
+            for key in self.DEFAULT_VALUES.keys():
+                if key not in self._CONFIG:
+                    self._CONFIG[key] = self.DEFAULT_VALUES[key]
+                if isinstance(self.DEFAULT_VALUES[key], dict):
+                    update(key)
+                self.write()
 
     @property
     def CONTEXT_SETTINGS(self):
