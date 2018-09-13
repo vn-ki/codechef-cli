@@ -9,11 +9,13 @@ logger = logging.getLogger(__name__)
 
 def setup_logger(log_level):
     if log_level == 'DEBUG':
-        format = '%(levelname)s %(name)s: %(message)s'
+        format = click.style('%(levelname)s', fg='green') + \
+            ' %(name)s: %(message)s'
     else:
         format = click.style('codechef', fg='green') + ': %(message)s'
 
-    logging.basicConfig(level=log_level, format=format)
+    logging.basicConfig(format=format)
+    logging.getLogger("codechef_cli").setLevel(log_level)
 
 
 def print_info(version):
@@ -45,7 +47,7 @@ def tabulate(ret_dict, keys_colors=None):
         for key in keys_colors:
             if isinstance(key, list):
                 # NOTE: Test on python 3.3
-                row.append(click.style(val[key[0]], **key[1]))
+                row.append(click.style(str(val[key[0]]), **key[1]))
             else:
                 row.append(val[key])
         table.append(row)

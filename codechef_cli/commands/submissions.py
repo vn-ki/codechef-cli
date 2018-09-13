@@ -5,6 +5,7 @@ import requests
 
 from codechef_cli.data import Data
 from codechef_cli.api.helpers import get_data
+import codechef_cli.util as util
 
 logger = logging.getLogger(__name__)
 
@@ -27,6 +28,7 @@ def cli():
 )
 @click.option(
     '--input-file', '-if', metavar='ID',
+    type=click.File("rb"),
     help="The file containing code",
     required=True
 )
@@ -84,7 +86,7 @@ def add(problem_code, input_file, language):
         "language": language,
         "problem_code": problem_code
     }, files={
-        "files[sourcefile]": open(input_file, 'r')
+        "files[sourcefile]": input_file
     })
 
     # done
@@ -95,14 +97,24 @@ def add(problem_code, input_file, language):
 @cli.command()
 def showall():
     """Show all submissions."""
+    # TODO: print response in a useful manner
+    resp = get_data('submissions', params={
+        'fields': 'id, date, problemCode, language, contestCode, result, time, memory',
+        'limit': 50,
+    })
+    util.select_one(
+        resp,
+        keys_colors=[['id', {'fg': 'yellow', 'bold': True}],
+                     ['date', {'fg': 'blue', 'bold': True}],
+                     'problemCode', 'language', 'contestCode', 'result', 'time', 'memory']
+    )
 
 
 @cli.command()
 @click.argument('uid', required=False)
 def status(uid):
     """Show the status of the last submission."""
-    resp = get_data("submissions", uid)
-    # TODO:print response in a useful manner
+    resp = get_data('submissions', uid)
     print(resp)
 
 

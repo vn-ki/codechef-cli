@@ -25,7 +25,7 @@ def call_api(*path, params=None, method=None):
     logger.debug("calling {}, params: {}".format(url, params))
     response = requests.get(url, headers=headers, params=params)
     response_map = response.json()
-    logger.debug("response from CC:status: {}".format(response_map['status']))
+    logger.debug("response from CC: {}".format(response_map['status']))
 
     if response_map['status'] == "OK":
         return response_map["result"]["data"]["content"]
