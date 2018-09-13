@@ -24,6 +24,10 @@ setup(
         'requests>=2.18.4',
         'Click>=6.7',
         'flask>=1.0.2',
+        'tabulate>=0.8.2',
+        'inscriptis>=0.0.3.2',
+        'picotui>=1.0',
+        'lxml',
     ],
     tests_require=[
         'pytest',
