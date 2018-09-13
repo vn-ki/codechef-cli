@@ -1,0 +1,114 @@
+{
+        "code": "JAN17",
+        "name": "January Challenge 2017",
+        "startDate": "2017-01-06 15:00:00",
+        "endDate": "2017-01-18 15:00:00",
+        "isParent": false,
+        "children": [],
+        "bannerFile": "https://www.codechef.com/download/small-banner/JAN17/1483608215.jpg",
+        "freezingTime": 0,
+        "announcements": "&lt;p&gt;14:30, 15th October 2017: The exam is extended by 10 minutes.&lt;br /&gt;&lt;b&gt;&lt;br /&gt;The problem weightages are given below in rules section.&lt;/b&gt;&lt;/p&gt;\r\n&lt;p&gt;The content of Recent Activity block from exam page has been made inaccessible. In case if you try to access it, you will get an error stating&nbsp;&lt;b&gt;&quot;You are not allowed to check this contest. Please reload&quot;&lt;/b&gt;. Please ignore the error and continue with your exam.&lt;/p&gt;\r\n&lt;p&gt;14:44, 15th October 2017: Problem accuracy will not be displayed. It has been restricted for this exam.&lt;/p&gt;\r\n&lt;p&gt;Also, the score shown on the exam page is not final. It is subject to change after final verification.&lt;/p&gt;\r\n&lt;p&gt;Additionally, you cannot leave the exam hall before 3:30 pm.&lt;/p&gt;",
+        "problemsList": [
+          {
+            "viewStart": "2017-01-06 15:00:00",
+            "submitStart": "2017-01-06 15:00:00",
+            "visibleStart": "2017-01-18 15:00:00",
+            "end": "2017-01-18 15:00:00",
+            "problemCode": "CAPIMOVE",
+            "contestCode": "JAN17",
+            "successfulSubmissions": 2482,
+            "accuracy": 13.454634865995
+          },
+          {
+            "viewStart": "2017-01-06 15:00:00",
+            "submitStart": "2017-01-06 15:00:00",
+            "visibleStart": "2017-01-18 15:00:00",
+            "end": "2017-01-18 15:00:00",
+            "problemCode": "CATSDOGS",
+            "contestCode": "JAN17",
+            "successfulSubmissions": 5533,
+            "accuracy": 16.797027766914
+          },
+          {
+            "viewStart": "2017-01-06 15:00:00",
+            "submitStart": "2017-01-06 15:00:00",
+            "visibleStart": "2017-01-18 15:00:00",
+            "end": "2017-01-18 15:00:00",
+            "problemCode": "SEACIR",
+            "contestCode": "JAN17",
+            "successfulSubmissions": 121,
+            "accuracy": 53.883892068684
+          },
+          {
+            "viewStart": "2017-01-06 15:00:00",
+            "submitStart": "2017-01-06 15:00:00",
+            "visibleStart": "2017-01-18 15:00:00",
+            "end": "2017-01-18 15:00:00",
+            "problemCode": "SEABOX",
+            "contestCode": "JAN17",
+            "successfulSubmissions": 71,
+            "accuracy": 3.3917682926829
+          },
+          {
+            "viewStart": "2017-01-06 15:00:00",
+            "submitStart": "2017-01-06 15:00:00",
+            "visibleStart": "2017-01-18 15:00:00",
+            "end": "2017-01-18 15:00:00",
+            "problemCode": "TUPLES",
+            "contestCode": "JAN17",
+            "successfulSubmissions": 31,
+            "accuracy": 4.1315345699831
+          },
+          {
+            "viewStart": "2017-01-06 15:00:00",
+            "submitStart": "2017-01-06 15:00:00",
+            "visibleStart": "2017-01-18 15:00:00",
+            "end": "2017-01-18 15:00:00",
+            "problemCode": "CHEFCIRC",
+            "contestCode": "JAN17",
+            "successfulSubmissions": 271,
+            "accuracy": 5.0542045121594
+          },
+          {
+            "viewStart": "2017-01-06 15:00:00",
+            "submitStart": "2017-01-06 15:00:00",
+            "visibleStart": "2017-01-18 15:00:00",
+            "end": "2017-01-18 15:00:00",
+            "problemCode": "FOURSQ",
+            "contestCode": "JAN17",
+            "successfulSubmissions": 173,
+            "accuracy": 1.7741681122851
+          },
+          {
+            "viewStart": "2017-01-06 15:00:00",
+            "submitStart": "2017-01-06 15:00:00",
+            "visibleStart": "2017-01-18 15:00:00",
+            "end": "2017-01-18 15:00:00",
+            "problemCode": "DIGITSEP",
+            "contestCode": "JAN17",
+            "successfulSubmissions": 331,
+            "accuracy": 6.8308034061459
+          },
+          {
+            "viewStart": "2017-01-06 15:00:00",
+            "submitStart": "2017-01-06 15:00:00",
+            "visibleStart": "2017-01-18 15:00:00",
+            "end": "2017-01-18 15:00:00",
+            "problemCode": "RESERVOI",
+            "contestCode": "JAN17",
+            "successfulSubmissions": 3227,
+            "accuracy": 17.976904845948
+          },
+          {
+            "viewStart": "2017-01-06 15:00:00",
+            "submitStart": "2017-01-06 15:00:00",
+            "visibleStart": "2017-01-18 15:00:00",
+            "end": "2017-01-18 15:00:00",
+            "problemCode": "TOURISTS",
+            "contestCode": "JAN17",
+            "successfulSubmissions": 807,
+            "accuracy": 3.7090500822006
+          }
+        ],
+        "currentTime": 1536838762
+      }

@@ -1,10 +1,12 @@
 from codechef_cli.api.helpers import get_data
+import logging
 
+logger = logging.getLogger(__name__)
 
 class Contest:
     def __init__(self, contest_code):
-        self.contest_code = contest_code
         self._data = get_data('contests', contest_code)
+        self.contest_code = self._data['code']
         self.name = self._data['name']
         self.start_date = self._data['startDate']
         self.end_date = self._data['endDate']
