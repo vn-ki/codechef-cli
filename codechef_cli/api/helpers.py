@@ -25,7 +25,7 @@ def call_api(*path, params=None, method=None):
     logger.debug("calling {}, params: {}".format(url, params))
     response = requests.get(url, headers=headers, params=params)
     response_map = response.json()
-    logger.debug("response from CC: {}".format(response_map['status']))
+    logger.debug("response from CC: {}".format(response_map))
 
     if response_map['status'] == "OK":
         return response_map["result"]["data"]["content"]
@@ -52,7 +52,7 @@ def call_api(*path, params=None, method=None):
                     Data["tokens"] = resp_map["result"]["data"]
                     # re-run the query
                     logger.debug("retrying query with new tokens")
-                    call_api(*path, params=params, method=method)
+                    return call_api(*path, params=params, method=method)
                 else:
                     # TODO:seperate exception?
                     raise exceptions.CodechefException
