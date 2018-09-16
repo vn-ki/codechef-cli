@@ -37,6 +37,6 @@ setup(
     long_description_content_type='text/markdown',
     entry_points='''
         [console_scripts]
-        codechef=codechef_cli.cli:cli
+        codechef=codechef_cli.cli:main
     '''
 )

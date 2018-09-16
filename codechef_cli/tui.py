@@ -1,11 +1,13 @@
 from picotui.context import Context
 from picotui.screen import Screen
-from picotui.defs import C_BLACK, C_WHITE, KEY_ESC, KEY_DOWN, KEY_UP
+from picotui.defs import *
 from picotui.widgets import (
     WMultiEntry,
     WButton,
     WListBox,
     Dialog,
+    EditorExt,
+    EditableWidget,
     ACTION_OK)
 import click
 
@@ -15,7 +17,20 @@ import threading
 from codechef_cli import util
 
 
-class TextArea(WMultiEntry):
+class TextArea(EditorExt, EditableWidget):
+    def __init__(self, w, h, lines):
+        EditorExt.__init__(self, width=w, height=h)
+        self.h = h
+        self.w = w
+        self.focus = False
+        self.set_lines(lines)
+
+    def get(self):
+        return self.content
+
+    def set(self, lines):
+        self.set_lines(lines)
+
     def handle_key(self, key):
         if key in (KEY_ESC,):
             return key
@@ -28,6 +43,11 @@ class TextArea(WMultiEntry):
         if super().handle_cursor_keys(key):
             return True
 
+    def show_line(self, l, i):
+        self.attr_color(C_WHITE, C_GRAY)
+        super().show_line(l, i)
+        self.attr_reset()
+
 
 def draw_contest_page(contest):
     if not contest.problem_codes:
@@ -35,11 +55,6 @@ def draw_contest_page(contest):
         return
     with Context():
         def set_text_body(prob):
-            # chunks, chunk_size = len(body), text.w
-            # wrapped = [body[i:i+chunk_size] for i in range(0, chunks, chunk_size)]
-            # lines = []
-            # for line in wrapped:
-                # lines += line.split('<br />')
             lines = util.html_to_terminal(prob.body).split('\n')
             lines = [click.style(prob.problem_name, bg='black',
                                  fg='blue', bold=True), ''] + lines
@@ -67,7 +82,7 @@ def draw_contest_page(contest):
                 text.goto_line(0)
                 text.redraw()
 
-        Screen.attr_color(C_WHITE, C_BLACK)
+        Screen.attr_color(C_WHITE, C_GRAY)
         Screen.cls()
         Screen.attr_reset()
         wid, hei = shutil.get_terminal_size()

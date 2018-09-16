@@ -1,5 +1,6 @@
 ﻿import click
 import os
+import sys
 
 from codechef_cli import util
 from codechef_cli.config import Config
@@ -38,3 +39,12 @@ def cli(log_level):
     """Codechef CLI"""
     util.setup_logger(log_level)
     util.print_info(__version__)
+
+
+def main():
+    try:
+        cli()
+    except Exception as e:
+        if 'DEBUG' in sys.argv:
+            raise
+        click.echo(click.style('ERROR:', fg='black', bg='red')+' '+click.style(str(e), fg='red'))
