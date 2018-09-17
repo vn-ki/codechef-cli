@@ -12,12 +12,13 @@ import logging
 from collections import defaultdict
 import click
 import threading
+from time import sleep
 from codechef_cli import util
 
 # Initial data for the form
 form_data = {
-    "TA": ["Hello world!", "How are you?", 'A'*100],
-    "problem_code": 6
+    "TA": ["Hello world!", "How are you?"],
+    "problem_code": 0
 }
 
 palette = {
@@ -43,6 +44,10 @@ logging.basicConfig(filename="forms.log", level=logging.DEBUG)
 
 
 class TextArea(TextBox):
+    def reset(self):
+        # Reset to original data and move to end of the text.
+        self._line = 0
+        self._column = 0
     def process_event(self, event):
         if isinstance(event, KeyboardEvent):
             if event.key_code in [10, 13]:
@@ -64,6 +69,10 @@ class DemoFrame(Frame):
                                         data=form_data,
                                         name="My Form")
         layout = Layout([4, 18, 1], fill_frame=True)
+        self.problem_body = TextArea(Widget.FILL_FRAME,
+                                     name="TA")
+        self.problem_body.register_frame(self)
+        self.problem_body.custom_colour = "title"
         self.contest = contest
         self.add_layout(layout)
         self._list_view = ListBox(
@@ -75,15 +84,13 @@ class DemoFrame(Frame):
             on_change=self._list_change,
             on_select=self._list_change)
         layout.add_widget(self._list_view, 0)
-        self.problem_body = TextArea(Widget.FILL_FRAME,
-                                     name="TA")
-        self.problem_body.custom_colour = "title"
         layout.add_widget(self.problem_body, 1)
         layout2 = Layout([1, 1, 1])
         self.add_layout(layout2)
         layout2.add_widget(Button("Quit", self._quit), 2)
         self.fix()
         self.palette = palette
+        self._list_change()
         # self.set_theme("monochrome")
 
     def _on_click(self):
@@ -95,25 +102,21 @@ class DemoFrame(Frame):
         index = self.data['problem_code']
         # TODO(vn-ki): refractor this
         def set_text(lines):
-            try:
-                self.problem_body.value = lines
-            except:
-                return
-            self.problem_body._line = 0
-            self.problem_body._column = len(self.problem_body._value[self.problem_body._line])
+            self.problem_body.value = lines
+            self.problem_body.focus()
 
         def set_text_body(prob):
             lines = util.html_to_terminal(prob.body).split('\n')
-            lines = [click.style(prob.problem_name, bg='black',
-                                 fg='blue', bold=True), ''] + lines
+            lines = [prob.problem_name + ''] + lines
             set_text(lines)
         def write_prob_to_screen():
             prob = self.contest[index]
-            if len(self.problem_body.value) > 1:
+            if len(self.problem_body.value)>1:
                 return
             set_text_body(prob)
         if not self.contest.is_problem_fetched(index):
-            t = threading.Thread(target=write_prob_to_screen)
+            t = threading.Thread(name='deamon', target=write_prob_to_screen)
+            t.setDaemon(True)
             t.start()
             set_text(['Loading....'])
         else:
@@ -133,6 +136,13 @@ def contest_screen(screen, scene, contest):
 
 
 def draw_contest_page(contest):
+    def cache_prob(idx):
+        contest[idx]
+    prob = contest[0]
+    lines = util.html_to_terminal(prob.body).split('\n')
+    lines = [prob.problem_name + ''] + lines
+    global form_data
+    form_data['TA'] = lines
     last_scene = None
     while True:
         try:
