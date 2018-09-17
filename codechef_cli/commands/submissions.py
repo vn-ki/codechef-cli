@@ -91,7 +91,9 @@ def add(problem_code, input_file, language):
 
     # done
     submission_code = re.search(r"complete/(\d+)", r.url).group(1)
-    click.echo(submission_code)
+    Data['_last_submission_code'] = submission_code
+    click.echo('Submission code: '+submission_code)
+    click.echo('Use `codechef submissions status` to see the status')
 
 
 @cli.command()
@@ -114,6 +116,8 @@ def showall():
 @click.argument('uid', required=False)
 def status(uid):
     """Show the status of the last submission."""
+    if not uid:
+        uid = Data['_last_submission_code']
     resp = get_data('submissions', uid)
     print(resp)
 
