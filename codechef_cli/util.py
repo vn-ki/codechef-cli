@@ -40,10 +40,28 @@ def format_search_results(search_results, keys=None):
     return ret
 
 
-def tabulate(ret_dict, keys_colors=None):
+def tabulate(ret_dict, keys_colors=None, add_num=True):
+    """Make a table out of the `dict` returned by the api.
+
+    :param ret_dict:
+        `dict` returned by the api
+    :param keys_colors:
+        `list` of `tuples` or `str` which contains info on how
+        table should be ordered and colored.
+        Ex: keys_colors=[['rank', {'fg': 'yellow', 'bold': True}],
+                     ['username', {'fg': 'blue', 'bold': True}],
+                     'country', 'totalScore']
+            will color rank with foreground yellow and
+            username with foreground blue.
+    :param add_num:
+        `bool` Whether to add Number coloumn or not
+    """
     table = []
     for idx, val in enumerate(ret_dict):
-        row = [idx+1, ]
+        if add_num:
+            row = [idx+1, ]
+        else:
+            row = []
         for key in keys_colors:
             if isinstance(key, list):
                 # NOTE: Test on python 3.3
@@ -52,7 +70,10 @@ def tabulate(ret_dict, keys_colors=None):
                 row.append(val[key])
         table.append(row)
 
-    headers = ['No', ]
+    if add_num:
+        headers = ['No', ]
+    else:
+        headers = []
     for key in keys_colors:
         if isinstance(key, list):
             headers.append(click.style(key[0], **key[1]))
@@ -60,12 +81,12 @@ def tabulate(ret_dict, keys_colors=None):
             headers.append(key)
 
     table = _tabulate(table, headers, tablefmt='psql')
-    table = '\n'.join(reversed(table.split('\n')))
     return table
 
 
-def select_one(ret_dict, keys_colors=None, msg='Select one'):
-    table = tabulate(ret_dict, keys_colors=keys_colors)
+def select_one(ret_dict, keys_colors=None, msg='Select one', add_num=True):
+    table = tabulate(ret_dict, keys_colors=keys_colors, add_num=add_num)
+    table = '\n'.join(reversed(table.split('\n')))
     print(table)
     value = click.prompt(msg, type=int)
     return ret_dict[value-1]

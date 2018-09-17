@@ -60,3 +60,37 @@ def problems(problem_code, contest_code):
     if not contest_code:
         contest = Data['_last_accesed_contest']
         tui.draw_contest_page(api.get_contest(contest['code']))
+
+
+@cli.command()
+@click.argument('contest_code', required=False)
+@click.option(
+    '--country', '-c',
+    help='Country to which the user belongs, eg. India'
+)
+@click.option(
+    '--institution', '-i',
+    help='Institution to which the user belongs, eg. Indian Institute of Technology Indore'
+)
+def rankings(contest_code, country, institution):
+    """Ranklist of a contest. If contest ID not given selects the last accesed contest."""
+    if contest_code is None:
+        contest_code = Data['_last_accesed_contest']['code']
+
+    ranklist = api.get_data('rankings', contest_code, params={
+        'fields': 'rank,username,country,totalScore',
+        'country': country,
+        'institution': institution,
+        'limit': 25,
+        'sortBy': 'rank',
+        'sortOrder': 'asc',
+    })
+
+    ranks = util.tabulate(
+        ranklist,
+        keys_colors=[['rank', {'fg': 'yellow', 'bold': True}],
+                     ['username', {'fg': 'blue', 'bold': True}],
+                     'country', 'totalScore'],
+        add_num=False,
+    )
+    click.echo_via_pager(ranks)
