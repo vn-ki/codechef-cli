@@ -56,10 +56,12 @@ def call_api(*path, params=None, method=None):
                 else:
                     # TODO:seperate exception?
                     raise exceptions.CodechefException
+            else:
+                err = response_map['result']['errors'][0]
+                raise exceptions.APIError('Message: {}, Code: {}'.format(err['message'], err['code']))
         # TODO: handle exceptions carefully
         except Exception as e:
-            logger.error(e)
-            raise exceptions.APIInputError
+            raise
 
 
 def get_data(*path, params=None):
