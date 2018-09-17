@@ -26,7 +26,7 @@ setup(
         'flask>=1.0.2',
         'tabulate>=0.8.2',
         'inscriptis>=0.0.3.2',
-        'picotui>=1.0',
+        'asciimatics>=1.9<=2.0',
         'lxml',
         'coloredlogs==10.0'
     ],
