@@ -69,7 +69,7 @@ def status(uid):
     if not uid:
         uid = Data['_last_submission_code']
     resp = get_data('submissions', uid)
-    logging.debug(resp)
+    logger.debug(resp)
     click.secho('Problem Code: ' + resp['problemCode'], fg='green')
     click.secho('Contest Code: ' + resp['contestCode'])
     if resp['result'] == 'CTE':
