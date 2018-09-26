@@ -1,4 +1,5 @@
 ﻿import click
+import importlib
 import os
 import sys
 
@@ -20,12 +21,8 @@ class CLIClass(click.MultiCommand):
         return rv
 
     def get_command(self, ctx, name):
-        ns = {}
-        fn = os.path.join(plugin_folder, name + '.py')
-        with open(fn) as f:
-            code = compile(f.read(), fn, 'exec')
-            eval(code, ns, ns)
-        return ns['cli']
+        command = importlib.import_module("codechef_cli.commands.{}".format(name))
+        return command.cli
 
 
 @click.group(cls=CLIClass, context_settings=Config.CONTEXT_SETTINGS)
