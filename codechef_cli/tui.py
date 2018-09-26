@@ -1,6 +1,7 @@
 from asciimatics.widgets import (Frame, TextBox, Layout,
                                  ListBox, Widget, Button,
-                                 Background, PopUpDialog)
+                                 Background, PopUpMenu,
+                                 FileBrowser)
 from asciimatics.event import KeyboardEvent
 from asciimatics.scene import Scene
 from asciimatics.screen import Screen
@@ -8,6 +9,7 @@ from asciimatics.exceptions import ResizeScreenError, NextScene, StopApplication
     InvalidFields
 
 import sys
+import os
 import logging
 import threading
 from codechef_cli import util
@@ -133,12 +135,49 @@ class DemoFrame(Frame):
         index = self.data['problem_code']
         pc = self.contest[index].problem_code
         cc = self.contest[index].contest_code
+        self._scene.add_effect(
+            PopUpMenu(self._screen,
+                      [("Item 1", self._on_click),
+                       ("Item 2", self._on_click),
+                       ("Item 3", self._on_click),
+                       ("Item 4", self._on_click)]))
+        # raise NextScene("File")
+
+
+class FileFrame(Frame):
+    def __init__(self, screen):
+        super().__init__(screen,
+                         screen.height * 2 // 3,
+                         screen.width * 2 // 3,
+                         data=form_data,
+                         name="My Form")
+        layout = Layout([100], fill_frame=True)
+        self.add_layout(layout)
+        layout.add_widget(FileBrowser(
+            Widget.FILL_FRAME,
+            os.path.abspath('.'),
+            on_select=self._on_select
+        ))
+        self.fix()
+        self.palette = palette
+
+    def _on_select(self):
+        raise NextScene('main')
+
 
 def contest_screen(screen, scene, contest):
-    screen.play([Scene([
-        Background(screen),
-        DemoFrame(screen, contest)
-    ], -1)], stop_on_resize=True, start_scene=scene)
+    screen.play(
+        [
+            Scene([
+                Background(screen),
+                DemoFrame(screen, contest),
+            ], -1, name="main"),
+            Scene([
+                Background(screen),
+                FileFrame(screen),
+            ], -1, name="File"),
+        ],
+        stop_on_resize=True, start_scene=scene)
 
 
 def draw_contest_page(contest):
