@@ -19,7 +19,7 @@ def setup_logger(log_level):
 
 
 def print_info(version):
-    logger.info('codechef-cli {}'.format(version))
+    logger.debug('codechef-cli {}'.format(version))
     logger.debug('Platform: {}'.format(platform.platform()))
     logger.debug('Python {}'.format(platform.python_version()))
 

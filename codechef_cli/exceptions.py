@@ -9,5 +9,6 @@ class APIInputError(CodechefException):
 class TokensNotFound(CodechefException):
     pass
 
+
 class APIError(CodechefException):
     pass

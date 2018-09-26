@@ -21,7 +21,8 @@ class CLIClass(click.MultiCommand):
         return rv
 
     def get_command(self, ctx, name):
-        command = importlib.import_module("codechef_cli.commands.{}".format(name))
+        command = importlib.import_module(
+            "codechef_cli.commands.{}".format(name))
         return command.cli
 
 
@@ -44,4 +45,5 @@ def main():
     except Exception as e:
         if 'DEBUG' in sys.argv:
             raise
-        click.echo(click.style('ERROR:', fg='black', bg='red')+' '+click.style(str(e), fg='red'))
+        click.echo(click.style('ERROR:', fg='black', bg='red') +
+                   ' '+click.style(str(e), fg='red'))

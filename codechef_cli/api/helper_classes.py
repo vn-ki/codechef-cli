@@ -3,6 +3,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+
 class Contest:
     def __init__(self, contest_code):
         self._data = get_data('contests', contest_code)

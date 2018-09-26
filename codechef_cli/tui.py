@@ -9,10 +9,7 @@ from asciimatics.exceptions import ResizeScreenError, NextScene, StopApplication
 
 import sys
 import logging
-from collections import defaultdict
-import click
 import threading
-from time import sleep
 from codechef_cli import util
 
 # Initial data for the form
@@ -48,6 +45,7 @@ class TextArea(TextBox):
         # Reset to original data and move to end of the text.
         self._line = 0
         self._column = 0
+
     def process_event(self, event):
         if isinstance(event, KeyboardEvent):
             if event.key_code in [10, 13]:
@@ -88,6 +86,7 @@ class DemoFrame(Frame):
         layout2 = Layout([1, 1, 1])
         self.add_layout(layout2)
         layout2.add_widget(Button("Quit", self._quit), 2)
+        layout2.add_widget(Button("Submit", self._submit), 1)
         self.fix()
         self.palette = palette
         self._list_change()
@@ -101,6 +100,7 @@ class DemoFrame(Frame):
         self.save()
         index = self.data['problem_code']
         # TODO(vn-ki): refractor this
+
         def set_text(lines):
             self.problem_body.value = lines
             self.problem_body.focus()
@@ -109,9 +109,10 @@ class DemoFrame(Frame):
             lines = util.html_to_terminal(prob.body).split('\n')
             lines = [prob.problem_name + ''] + lines
             set_text(lines)
+
         def write_prob_to_screen():
             prob = self.contest[index]
-            if len(self.problem_body.value)>1:
+            if len(self.problem_body.value) > 1:
                 return
             set_text_body(prob)
         if not self.contest.is_problem_fetched(index):
@@ -127,6 +128,11 @@ class DemoFrame(Frame):
     def _quit(self):
         raise StopApplication("User requested exit")
 
+    def _submit(self):
+        self.save()
+        index = self.data['problem_code']
+        pc = self.contest[index].problem_code
+        cc = self.contest[index].contest_code
 
 def contest_screen(screen, scene, contest):
     screen.play([Scene([
