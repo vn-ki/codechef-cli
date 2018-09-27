@@ -5,6 +5,7 @@ import logging
 
 from codechef_cli.data import Data
 from codechef_cli.exceptions import APIError
+from tabulate import tabulate
 
 logger = logging.getLogger(__name__)
 
@@ -105,6 +106,11 @@ def _get_language_id(language):
         "118": "Cobol(open-cobol 1.1.0)",
         "124": "F#(mono 4.0.0)"
     }
+    # check if user has provided language id
+    if language in language_map.keys():
+        logger.info("Language selected: {}".format(language_map[language]))
+        return language
+
     filtered = {id: name for id, name in language_map.items()
                 if language.lower() in name.lower()}
     if len(filtered) == 1:
@@ -120,9 +126,9 @@ def _get_language_id(language):
     else:
         # multiple languages found
         click.echo("We found the following languages : ")
-        for k, v in filtered.items():
-            click.echo(" - " + v)
-        click.echo("Please be more specific")
+        print(tabulate(filtered.items(), headers=[
+              "id", "name"], tablefmt="psql"))
+        click.echo("Please be more specific. You can also enter language id.")
         return False
 
 
