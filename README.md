@@ -1,16 +1,21 @@
-# Hackathon
+![logo](extras/logo.png)
 
-Project: CLI app for code chef.
+Created as a part of codechef API hackathon.
+
+## Extras
+
+- New codechef friends functionlity. ([codechef-friends](https://github.com/Mrigank11/codechef_friends))
+- Neovim plugin. ([codechef.nvim](https://github.com/vn-ki/codechef.nvim))
 
 ## Features
 
-- Submit from terminal (using a hack)
-- View problems
-- Recommend problems.
-- View friends ("look" into their profiles)
-- add sets (api provides)
+- Submit from terminal (using a hack).
+- See competetions.
+- See ranklist of past competetions. 
+- View problems using a tui.
+- Add friends and see their profiles.
 
-# Installing
+## Installing
 
 ```bash
 # Clone the repo
@@ -21,18 +26,16 @@ cd codechef-cli
 pip install -e .
 ```
 
-## Architecture
-### Client
+NOTE: Tested only on linux. The tool should work on windows but color support and tui is not guarenteed to work.
 
-- Click based CLI
-- commands
-  - [x] login
-    - start OAUTH flow
-    - save received tokens
-  - [x] submissions
-    - add INPUTFILE --problem-code[-pc] --contest-code[-cc]
-    - showall
-    - status [uid]
-  - [x] compete
-    - show --contest-code[-ci] --filter=[ongoing,past,upcoming]
-    - problems --problem-code[-pc] --problem-no[-pn]
+## Usage
+
+```bash
+$ codechef --help
+```
+
+## TODO
+
+- [ ] Integration with codechef friends.
+- [ ] Codechef TODO
+- [ ] Problem recommendation.
