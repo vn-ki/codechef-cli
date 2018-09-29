@@ -1,6 +1,9 @@
 ![logo](extras/logo.png)
 
-Created as a part of codechef API hackathon.
+[![Documentation Status](https://readthedocs.org/projects/codechef-cli/badge/?version=latest)](https://codechef-cli.readthedocs.io/en/latest/?badge=latest)
+
+
+Created as a part of codechef API hackathon. See [docs](https://codechef-cli.readthedocs.io/en/latest/).
 
 ## Extras
 
