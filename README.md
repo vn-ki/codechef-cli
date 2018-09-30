@@ -5,6 +5,8 @@
 
 Created as a part of codechef API hackathon. See [docs](https://codechef-cli.readthedocs.io/en/latest/).
 
+If you want to see a video demonstrating the functionlities, [here you go](https://youtu.be/hlVxnuNxYek)
+
 ## Extras
 
 - New codechef friends functionlity. ([codechef-friends](https://github.com/Mrigank11/codechef_friends))
@@ -14,7 +16,7 @@ Created as a part of codechef API hackathon. See [docs](https://codechef-cli.rea
 
 - Submit from terminal (using a hack).
 - See competetions.
-- See ranklist of past competetions. 
+- See ranklist of past competetions.
 - View problems using a tui.
 - Add friends and see their profiles.
 
