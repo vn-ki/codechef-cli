@@ -70,10 +70,20 @@ def status(uid):
         uid = Data['_last_submission_code']
     resp = get_data('submissions', uid)
     logger.debug(resp)
+    click.secho('Submission ID: {}'.format(uid))
     click.secho('Problem Code: ' + resp['problemCode'], fg='green')
     click.secho('Contest Code: ' + resp['contestCode'])
     if resp['result'] == 'CTE':
         click.echo(
             'Result: ' +
             click.style('Compile time Error', bg='red', fg='black')
+        )
+    elif resp['result'] == 'AC':
+        click.echo(
+            'Result: ' +
+            click.style('All Correct', bg='green', fg='black')
+        )
+    else:
+        click.echo(
+            'Result: ' + resp['result']
         )

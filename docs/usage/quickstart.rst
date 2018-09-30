@@ -18,3 +18,5 @@ You get a codechef command right out of the box.::
       contest      Information about contests.
       login        Start the login process, receive tokens and store them
       submissions  Submit your solution to a problem and view it's status.
+
+Use :code:`codechef login` to login and authenticate the app. After that you can start using the different commands.
