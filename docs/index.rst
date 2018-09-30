@@ -24,5 +24,6 @@ See more detailed info about the commands in `commmands documentation <commands/
    usage/installation
    usage/quickstart
    commands/index
+   codechef_friends/index
 
 
